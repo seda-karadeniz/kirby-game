@@ -2,6 +2,6 @@ let mix = require('laravel-mix')
 
 mix.setPublicPath('dist/')
     .copy('src/index.html', 'dist/index.html')
-    .copyDirectory('src/ressources', 'dist/resources')
+    .copyDirectory('src/resources', 'dist/resources')
     .js('src/js/main.js', 'dist/js/')
     .sass('src/scss/main.scss', 'dist/css/')
