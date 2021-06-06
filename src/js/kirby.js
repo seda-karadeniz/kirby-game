@@ -1,3 +1,6 @@
+import background from "./background";
+
+
 const kirby ={
     game : null,
     frame : [
@@ -10,24 +13,42 @@ const kirby ={
         {sx:203, sy:222},
         {sx:236, sy:222},
     ],
-    width : 21,
-    height : 21,
+    width : 20,
+    height : 20,
     x : 40,
     y : 107,
     maxAnimationStep:0,
     animationStep : 0,
     counterIntervall : 0,
     maxIntervall : 6,
+    fallSpeed : 0,
+    maxFallSpeed : 2,
+
 
 
 
     init(game){
         this.game = game;
         this.maxAnimationStep = this.frame.length-1;
+        this.fallSpeed = 0;
+        this.maxFallSpeed = 2;
+        this.jump();
 
     },
 
     update() {
+        if (!(this.collisionRectangle())  ){
+            if (this.fallSpeed < this.maxFallSpeed){
+                this.fallSpeed += this.game.gravity;
+            }
+            this.y += this.fallSpeed;
+        }
+        if (this.y > background.frame.dh){
+            console.log('oui')
+            this.game.cancelAnimation();
+        }
+
+
         this.render();
 
     },
@@ -56,6 +77,33 @@ const kirby ={
         this.game.context.restore();
 
     },
+
+    collisionRectangle(){
+
+        if ((this.x <= this.game.rectangle1.x + this.game.rectangle1.width) &&
+            (this.x + this.width >= this.game.rectangle1.x) &&
+            (this.y + this.height === this.game.rectangle1.y+10)
+            ||
+            ((this.x <= this.game.rectangle2.x + this.game.rectangle2.width) &&
+            (this.x + this.width >= this.game.rectangle2.x) &&
+            (this.y + this.height === this.game.rectangle2.y+10))){
+            return true
+        }
+
+        else {
+            return false;
+        }
+
+    },
+    jump(){
+        window.addEventListener('keydown', (e)=>{
+            if (e.key === 'j'){
+                this.y -= 40;
+                this.x += 15;
+
+            }
+        })
+    }
 }
 
 export default kirby;

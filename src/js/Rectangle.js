@@ -6,9 +6,7 @@ export default class Rectangle{
         this.height = 25;
         this.width = 150;
         this.x = x;
-        this.yTop = 128;
-        this.yBottom = 328;
-        this.yTable = [118,228,328];
+        this.yTable = [140,228,328];
 
         //this.y = this.getRandomArbitrary(150,600);
         if(isFirst){

@@ -14,8 +14,11 @@ const game ={
     spriteLoadedTotal : 2,
     rectangle1 : null,
     rectangle2: null,
+    gravity : 1,
+    requestId : 0,
 
     init(){
+
         this.context = this.canvas.getContext('2d');
         this.rectangle1 = new Rectangle(this,0, true);
         this.rectangle2 = new Rectangle(this,300 );
@@ -39,14 +42,16 @@ const game ={
     },
 
     animateIfPossible(){
+
         this.spriteLoadedCounter++;
         if (this.spriteLoadedCounter === this.spriteLoadedTotal){
+
             this.animate();
         }
     },
 
     animate(){
-        window.requestAnimationFrame(() => {
+        this.requestId = window.requestAnimationFrame(() => {
             this.animate();
         })
         this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
@@ -92,6 +97,9 @@ const game ={
 
 
     },
+    cancelAnimation(){
+        window.cancelAnimationFrame(this.requestId);
+    }
 
 
 
